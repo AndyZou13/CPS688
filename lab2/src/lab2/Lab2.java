@@ -2,6 +2,7 @@ package lab2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ import java.util.Stack;
  * @author Andy
  */
 public class Lab2 {
-    boolean isSafe (int board[][], int row, int col, int n) {
+    public boolean isSafe (int board[][], int row, int col, int n) {
         for (int i = 0; i < col; i ++) 
             if (board[row][i] == 1)
                 return false;
@@ -24,7 +25,7 @@ public class Lab2 {
                 return false;
         return true;
     }
-    boolean solve (int board[][], int col, int n) {
+    public boolean solve (int board[][], int col, int n) {
         if (col >= n)
             return true;
         for (int i = 0; i < n; i ++) {
@@ -56,7 +57,7 @@ public class Lab2 {
         
     }
     
-    boolean checkLoop (List<List<Integer>> array, int n) {
+    public boolean checkLoop (List<List<Integer>> array, int n) {
         List<Integer> r = new ArrayList<Integer>();
         Stack<Integer> stack = new Stack<Integer>();
         List<List<Integer>> arr = array;
@@ -77,7 +78,8 @@ public class Lab2 {
     }
     public void checkAcyclic () throws FileNotFoundException{
         List<List<Integer>> arr = new ArrayList<List<Integer>>();
-        File file = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab2\\acyclic.txt");
+        URL path = Lab2.class.getResource("acyclic.txt");
+        File file = new File(path.getFile());
         Scanner sc = new Scanner(file);
         boolean first = true;
         int n = 0;
@@ -143,29 +145,30 @@ public class Lab2 {
             } 
         }
     }
-    int maxValue(int a, int b) {
+    
+    public int maxValue(int a, int b) {
         if (a > b)
             return a;
         return b;
     }
-    int bag (int w, int[] candy, int[] weight, int n) {
+    public int bag (int w, int[] candy, int[] weight, int n) {
         if (n == 0 || w == 0)
             return 0;
         if (weight[n - 1] > w)
             return bag (w, candy, weight, n - 1);
         else 
             return maxValue(candy[n - 1] + bag(w - weight[n - 1], candy, weight, n - 1), bag(w, candy, weight, n - 1));
-    }
-    
+    }  
     public int candyBag () throws FileNotFoundException{
-        File file = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab2\\candy.txt");
+        URL path = Lab2.class.getResource("candy.txt");
+        File file = new File(path.getFile());
         Scanner sc = new Scanner(file);
         int[] candy = new int[0], weight = new int[0];
         int b = 0;
         for (int i = 0; i < 4; i ++) {
             if (i == 0) {
                 candy = new int[Integer.parseInt(sc.nextLine())];
-                weight = candy;
+                weight = new int[candy.length];
             } else if (i == 1) {
                 String[] st = sc.nextLine().split(" ");
                 for (int j = 0; j < st.length; j ++) {
@@ -183,11 +186,41 @@ public class Lab2 {
         return bag(b, candy, weight, candy.length);
     }
     
+    public void LIS () throws FileNotFoundException{
+        URL path = Lab2.class.getResource("LIS.txt");
+        File file = new File(path.getFile());
+        Scanner sc = new Scanner(file);
+        String[] st = sc.nextLine().split(" ");
+        int[] l = new int[st.length];
+        int[] arr = new int[l.length];
+        ArrayList<Integer> ret = new ArrayList<>();
+        int r = 0;
+        for (int i = 0; i < st.length; i ++)  {
+            l[i] = Integer.parseInt(st[i]);
+            arr[i] = 1;
+        }
+        for (int i = 1; i < l.length; i ++) {
+            for (int j = 0; j < i; j ++) {
+                if (l[i] > l[j] && arr[i] < arr[j] + 1) {
+                    arr[i] = arr[j] + 1;
+                }
+            }
+        }
+        for (int i = 0; i < l.length; i++) {
+            if (r < arr[i]) {
+                ret.add(l[i]);
+                r = arr[i];
+            }
+        }
+        System.out.println("LIS = " + r);
+        System.out.print("LIS is: " + ret.toString());
+    }
     public static void main(String[] args) throws FileNotFoundException{
         Lab2 q = new Lab2();
         System.out.print("N Queens Problem: ");
         Scanner sc = new Scanner(System.in);
         q.nQueens(Integer.parseInt(sc.nextLine()));
+
         Lab2 ac = new Lab2();
         System.out.println("Acyclic Problem: from text file");
         ac.checkAcyclic();
@@ -197,6 +230,10 @@ public class Lab2 {
         Lab2 c = new Lab2();
         System.out.println("Candy Problem: from text file");
         System.out.println("Max sentimental: " + c.candyBag());
+        
+        Lab2 l = new Lab2();
+        System.out.println("LIS Problem: from text file");
+        l.LIS();
     }
     
 }
