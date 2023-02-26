@@ -78,8 +78,7 @@ public class Lab2 {
     }
     public void checkAcyclic () throws FileNotFoundException{
         List<List<Integer>> arr = new ArrayList<List<Integer>>();
-        URL path = Lab2.class.getResource("acyclic.txt");
-        File file = new File(path.getFile());
+        File file = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab2\\src\\lab2\\acyclic.txt");
         Scanner sc = new Scanner(file);
         boolean first = true;
         int n = 0;
@@ -128,22 +127,65 @@ public class Lab2 {
             System.out.println("no");
     }
     
+    public int min(int k[], Boolean mSet[], int v) {
+        int min = Integer.MAX_VALUE;
+        int minI = -1;
+
+        for (int i = 0; i < v; i++)
+            if (mSet[i] == false && k[i] < min) {
+            min = k[i];
+            minI = i;
+        }
+        return minI;
+    }
     public void minSpan () throws FileNotFoundException{
         List<List<Integer>> arr = new ArrayList<List<Integer>>();
-        File file = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab2\\acyclic.txt");
+        File file = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab2\\src\\lab2\\minspan.txt");
         Scanner sc = new Scanner(file);
         boolean first = true;
-        int n = 0;
+        int v = 0, e = 0;
         int[] w = new int[3];
+        int[][] graph = null;
         while (sc.hasNextLine()) {
             String[] st = sc.nextLine().split(" ");
             if (first == true) {
                 first = false;
-                n = Integer.parseInt(st[0]);
+                v = Integer.parseInt(st[0]);
+                e = Integer.parseInt(st[1]);
+                graph = new int[v][v];
             } else {
-                
+                w[0] = Integer.parseInt(st[0]);
+                w[1] = Integer.parseInt(st[1]);
+                w[2] = Integer.parseInt(st[2]);
+                graph[w[0]][w[1]] = w[2];
+                graph[w[1]][w[0]] = w[2];
             } 
         }
+        
+        int[] p = new int[v];
+        int[] k = new int[v];
+        Boolean[] mSet = new Boolean[v];
+        for (int i = 0; i < v; i ++) {
+            k[i] = Integer.MAX_VALUE;
+            mSet[i] = false;
+        }
+        k[0] = 0;
+        p[0] = -1;
+        for (int j = 0; j < v - 1; j++) {
+            int m = min(k, mSet, v);
+            mSet[m] = true;
+            for (int i = 0; i < v; i++)
+                if (graph[m][i] != 0 && mSet[i] == false && graph[m][i] < k[i]) {
+                    p[i] = m;
+                    k[i] = graph[m][i];
+                }
+        }
+        int counter = 0;
+        for (int i = 1; i < v; i++){
+            counter += graph[i][p[i]];
+            System.out.println("Edge "+ p[i] + "-" + i + " has a weight of " + graph[i][p[i]]);
+        }
+        System.out.println("MST = "+ counter);
     }
     
     public int maxValue(int a, int b) {
@@ -160,8 +202,7 @@ public class Lab2 {
             return maxValue(candy[n - 1] + bag(w - weight[n - 1], candy, weight, n - 1), bag(w, candy, weight, n - 1));
     }  
     public int candyBag () throws FileNotFoundException{
-        URL path = Lab2.class.getResource("candy.txt");
-        File file = new File(path.getFile());
+        File file = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab2\\src\\lab2\\candy.txt");
         Scanner sc = new Scanner(file);
         int[] candy = new int[0], weight = new int[0];
         int b = 0;
@@ -187,8 +228,7 @@ public class Lab2 {
     }
     
     public void LIS () throws FileNotFoundException{
-        URL path = Lab2.class.getResource("LIS.txt");
-        File file = new File(path.getFile());
+        File file = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab2\\src\\lab2\\LIS.txt");
         Scanner sc = new Scanner(file);
         String[] st = sc.nextLine().split(" ");
         int[] l = new int[st.length];
@@ -225,7 +265,9 @@ public class Lab2 {
         System.out.println("Acyclic Problem: from text file");
         ac.checkAcyclic();
         
-        //mst
+        Lab2 mst = new Lab2();
+        System.out.println("Minimum Spanning Tree: from text file");
+        mst.minSpan();
         
         Lab2 c = new Lab2();
         System.out.println("Candy Problem: from text file");
