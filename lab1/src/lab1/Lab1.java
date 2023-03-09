@@ -75,6 +75,7 @@ public class Lab1 {
         int curr = 0;
         while (stack.isEmpty() == false) {
             curr = stack.pop();
+            System.out.println(curr);
             if (r.contains(curr) == false)
                 r.add(curr);
             for (int i : arr.get(curr)) {
