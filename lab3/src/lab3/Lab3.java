@@ -30,7 +30,7 @@ public class Lab3 {
     } 
     
     public static void main(String[] args) throws FileNotFoundException {
-        File file1 = new File("C:\\Users\\Battl\\Desktop\\School\\Third Year\\gitCPS688\\CPS688\\lab3\\src\\lab3");
+        File file1 = new File("C:\\Users\\Battl\\Desktop\\School\\Third Year\\gitCPS688\\CPS688\\lab3\\src\\lab3\\cutRod.txt");
         Scanner sc = new Scanner(file1);
         int n = sc.nextInt();
         int[] p =  new int[n];
