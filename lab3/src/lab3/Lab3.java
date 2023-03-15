@@ -58,7 +58,7 @@ public class Lab3 {
         return DFS(adjList, V);
     }
     public static void main(String[] args) throws FileNotFoundException {
-        File file1 = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab3\\src\\lab3\\cutRod.txt");
+        File file1 = new File("C:\\Users\\Battl\\Desktop\\School\\Third Year\\gitCPS688\\CPS688\\lab3\\src\\lab3\\cutRod.txt");
         Scanner sc1 = new Scanner(file1);
         int n = sc1.nextInt();
         int[] p =  new int[n];
@@ -67,7 +67,7 @@ public class Lab3 {
         }
         System.out.println("Maximum value obtainable: " + cutRod(p, n));
 
-        File file2 = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab3\\src\\lab3\\SCC.txt");
+        File file2 = new File("C:\\Users\\Battl\\Desktop\\School\\Third Year\\gitCPS688\\CPS688\\lab3\\src\\lab3\\SCC.txt");
         Scanner sc2 = new Scanner(file2);
         int a = sc2.nextInt();
         int c = sc2.nextInt();
