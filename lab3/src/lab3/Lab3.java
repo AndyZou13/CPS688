@@ -8,6 +8,7 @@ package lab3;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -51,12 +52,25 @@ public class Lab3 {
             return true;
         return false;
     }
+    static LinkedList<Integer> [] tranposeGraph(LinkedList<Integer> adjList[], int V) {
+        LinkedList<Integer> l[] = new LinkedList[V];
+        for (int i = 0; i < V; i++) {
+            Iterator<Integer> it = adjList[i].listIterator();
+            while(it.hasNext())
+                l[it.next()].add(i);
+        }
+        return l;
+    }
     static boolean SCC(LinkedList<Integer> adjList[], int V) {
         boolean visited[] = new boolean[V];
         for (int i = 0; i < V; i ++) 
             visited[i] = false;
-        return DFS(adjList, V);
+        boolean dfs = DFS(adjList, V);
+        if (dfs == false)
+            return false;
+        return DFS(tranposeGraph(adjList, V), V);
     }
+
     public static void main(String[] args) throws FileNotFoundException {
         File file1 = new File("C:\\Users\\Battl\\Desktop\\School\\Third Year\\gitCPS688\\CPS688\\lab3\\src\\lab3\\cutRod.txt");
         Scanner sc1 = new Scanner(file1);
