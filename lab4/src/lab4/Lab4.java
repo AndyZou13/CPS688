@@ -60,12 +60,17 @@ public class Lab4 {
             if (findJob(graph, seen, i, m, jobs, apps))
                 r++;
         }
+        int j = 0;
+        for (int i : m) {
+            System.out.println(j +  ": " + i);
+            j ++;
+        }
         return r;
 
     }
 
     public static void main(String[] args) throws FileNotFoundException{
-        File file = new File("C:\\Users\\Battl\\Desktop\\School So far\\VSCODE\\CPS688\\lab4\\src\\lab4\\MBM.txt");
+        File file = new File("C:\\Users\\Battl\\Desktop\\School\\Third Year\\gitCPS688\\CPS688\\lab4\\src\\lab4\\MBM.txt");
         Lab4 lab4 = new Lab4();
         ArrayList<ArrayList<Integer>> graph = lab4.setGraph(file);
         for (int i = 0; i < 6; i ++) {
