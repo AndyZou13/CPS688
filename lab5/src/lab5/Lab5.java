@@ -19,7 +19,38 @@ public class Lab5 {
     static String text;
     static String pat;
 
-    public static String search (String txt, String pat) {
+    static long patHash;
+    static long Q = 2147483647;
+    static int R = 256;
+    static long RM = 1;
+
+    public static long hash(String key, int M) {
+        long h = 0;
+        for (int i = 0; i < M; i ++) {
+            h = (R * h + key.charAt(i)) % Q;
+        }
+        return h;
+    }
+    public static String RKsearch (String txt, String pat) {
+        for (int i = 1; i <= M - 1; i ++) {
+            RM = (R * RM) % Q;
+        }
+        patHash = hash(pat, M);
+        int N = txt.length();
+        long txtHash = hash(txt, M);
+        String s = "";
+        if (patHash == txtHash)
+            s = s + " " + 0;
+        for (int i = M; i < N; i ++) {
+            txtHash = (txtHash + Q - RM * txt.charAt(i - M) % Q) % Q;
+            txtHash = (txtHash * R + txt.charAt(i)) % Q;
+            if (patHash == txtHash) {
+                s = s + " " + (i - M + 1);
+            }
+        } 
+        return s;
+    }
+    public static String BMsearch (String txt, String pat) {
         int N = txt.length();
         int M = pat.length();
         int skip = 0;
@@ -55,9 +86,9 @@ public class Lab5 {
             N = text.length();
             M = pat.length();
             System.out.println("\nBoyer-Moore");
-            System.out.println("Pattern " + pat + " found at index: " + search(text, pat));
-            //System.out.println("\nRabin-Karp");
-            System.out.print("\n");
+            System.out.println("Pattern " + pat + " found at index:" + BMsearch(text, pat));
+            System.out.println("\nRabin-Karp");
+            System.out.println("Pattern " + pat + " found at index:" + RKsearch(text, pat));
         }
     }
 }
