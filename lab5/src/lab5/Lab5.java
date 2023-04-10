@@ -17,7 +17,7 @@ public class Lab5 {
     static int M;
     static Scanner sc = new Scanner (System.in);
     static String text;
-    static String pat;
+    static String pattern;
 
     static long patHash;
     static long Q = 2147483647;
@@ -45,18 +45,28 @@ public class Lab5 {
             txtHash = (txtHash + Q - RM * txt.charAt(i - M) % Q) % Q;
             txtHash = (txtHash * R + txt.charAt(i)) % Q;
             if (patHash == txtHash) {
-                s = s + " " + (i - M + 1);
+                if (checkFunc(i - M + 1, txt, pat) == true)
+                    s = s + " " + (i - M + 1);
             }
         } 
         return s;
     }
+
+    public static boolean checkFunc (int num, String txt, String pat) {
+        for (int i = 0; i < M; i++)  {
+            if (txt.charAt(i + num) != pat.charAt(i))
+                return false;
+        }
+        return true;
+    }
+
     public static String BMsearch (String txt, String pat) {
         int N = txt.length();
         int M = pat.length();
         int skip = 0;
         int[] right = new int[256];
         String s = "";
-        for (int c = 0;c < 256; c ++) {
+        for (int c = 0; c < 256; c ++) {
             right[c] = -1;
         }
         for (int j = 0; j < M; j ++) {
@@ -82,13 +92,13 @@ public class Lab5 {
             System.out.print("Enter Text: ");
             text = sc.nextLine();
             System.out.print("Enter Pattern: ");
-            pat = sc.nextLine();
+            pattern = sc.nextLine();
             N = text.length();
-            M = pat.length();
+            M = pattern.length();
             System.out.println("\nBoyer-Moore");
-            System.out.println("Pattern " + pat + " found at index:" + BMsearch(text, pat));
+            System.out.println("Pattern " + pattern + " found at index:" + BMsearch(text, pattern));
             System.out.println("\nRabin-Karp");
-            System.out.println("Pattern " + pat + " found at index:" + RKsearch(text, pat));
+            System.out.println("Pattern " + pattern + " found at index:" + RKsearch(text, pattern));
         }
     }
 }
