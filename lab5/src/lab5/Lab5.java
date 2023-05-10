@@ -39,14 +39,16 @@ public class Lab5 {
         int N = txt.length();
         long txtHash = hash(txt, M);
         String s = "";
-        if (patHash == txtHash)
+        if (patHash == txtHash) {
             s = s + " " + 0;
+        }
         for (int i = M; i < N; i ++) {
             txtHash = (txtHash + Q - RM * txt.charAt(i - M) % Q) % Q;
             txtHash = (txtHash * R + txt.charAt(i)) % Q;
             if (patHash == txtHash) {
-                if (checkFunc(i - M + 1, txt, pat) == true)
+                if (checkFunc(i - M + 1, txt, pat) == true) {
                     s = s + " " + (i - M + 1);
+                }
             }
         } 
         return s;
